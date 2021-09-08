@@ -1,9 +1,9 @@
 import React from 'react';
-import { Card } from 'react-bootstrap';
+import { Badge, Card } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 
 const Repo = ({ repo }) => {
-    const { name, created_at, stargazers_count, owner, id } = repo;
+    const { name, created_at, stargazers_count, owner, id, language } = repo;
 
     return (
         <Link className="repo-link mb-2" to={{ pathname: `/details/${id}`, state: { repo: repo } }}>
@@ -14,13 +14,13 @@ const Repo = ({ repo }) => {
                             <Card.Title>
                                 {name} - <span className="text-muted font-weight-light">{owner.login}</span>
                             </Card.Title>
-                            <Card.Subtitle className="text-muted mb-2">
-                                {new Date(created_at).toLocaleDateString()}
-                            </Card.Subtitle>                            
+                            <Card.Subtitle className="mb-2">
+                                <Badge className="float-left" variant="secondary">{language}</Badge>                           
+                            </Card.Subtitle>
                         </div>
-                        <h6 className="result-stars">
-                            <div><i className="float-left bi bi-star-fill"></i>&nbsp;{stargazers_count}</div>
-                        </h6>
+                        <Card.Text as="h6" className="result-stars">
+                            <div><i className="bi bi-star-fill"></i>&nbsp;{stargazers_count}</div>                            
+                        </Card.Text>                        
                     </div>
                 </Card.Body>
             </Card>
