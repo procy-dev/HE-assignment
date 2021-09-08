@@ -11,15 +11,16 @@ const SearchContainer = () => {
     const [params, setParams] = useState({});
     const [page, setPage] = useState(1);
 
+    // uses custom hook to fetch repositories
     const { repos, loading, error } = useFetchRepos(params, page);
 
+    // total number of pages of results
     const totalPages = Math.floor(repos.total_count / 10);
+
+    // toggles visibility of pagination
     const visibility = repos.length <= 0 ? 'hidden' : 'visible';
 
-    useEffect(() => {
-        setPage(1);
-    }, [params])
-
+    // debounce input change to prevent uncecessary api calls
     const debounce = (fn, wait) => {
         let timeout;
         return (...args) => {
@@ -31,19 +32,23 @@ const SearchContainer = () => {
         };
     }
 
+    // takes info from the search form and sets parameters to be queried
     const handleParamChange = (e) => {
         const param = e.target.name;
+        // handles checkbox input
         const value = param === 'sort' ? e.target.checked && 'stars' : e.target.value;
         
         setPage(1);
-        setParams(prevParams => ({ ...prevParams, [param]: value }));      
+        setParams(prevParams => ({ ...prevParams, [param]: value }));
     }
 
     const debounceOnChange = useCallback(debounce(handleParamChange, 1000), []);
 
+    // sets appropriate display information based on search status/results
     const Display = () => {
         if(error) return <h1>{error.message}</h1>
         else if(loading) return <h1>Loading...</h1>
+        else if(repos.items.length === 0) return <h1>No Repositories Found</h1>
         return (
             <h1>
                 {repos?.items?.map((repo) => {
@@ -62,7 +67,7 @@ const SearchContainer = () => {
                     previousLabel={'<'}
                     nextLabel={'>'}
                     breakLabel={'...'}
-                    pageCount={totalPages < 100 ? totalPages : 100}
+                    pageCount={totalPages < 100 ? totalPages : 100} // sets total pages and limits to 100 since api will only allow 1000 entries to be queried
                     marginPagesDisplayed={1}
                     pageRangeDisplayed={5}
                     onPageChange={({ selected }) => {

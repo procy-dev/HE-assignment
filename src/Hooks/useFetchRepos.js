@@ -5,11 +5,11 @@ const ACTIONS = {
     MAKE_REQUEST: 'make-request',
     GET_DATA: 'get-data',
     ERROR: 'error',
-    UPDATE_HAS_NEXT_PAGE: 'update-has-next-page'
 }
 
 const BASE_URL = 'https://api.github.com/search/repositories';
 
+// reducer to manage state of request to keep track of loading and error messages
 const reducer = (state, action) => {
     switch(action.type) {
         case ACTIONS.MAKE_REQUEST:
@@ -18,8 +18,6 @@ const reducer = (state, action) => {
             return { ...state, loading: false, repos: action.payload.repos };
         case ACTIONS.ERROR:
             return { ...state, loading: false, error: action.payload.error, repos: [] };
-        case ACTIONS.UPDATE_HAS_NEXT_PAGE:
-            return { ...state, hasNextPage: action.payload.hasNextPage };
         default:
             return state
     }
@@ -28,19 +26,22 @@ const reducer = (state, action) => {
 export default function useFetchRepos(params, page) {
     const [state, dispatch] = useReducer(reducer, { repos: [], loading: false });
 
-    const q = `in:name ${params.name} language:${params.language}`
+    // constructs query based on parameters
+    const q = `in:name ${params.name} language:${params.language}`;
     const orderBy = params.sort ? 'desc' : 'asc';
 
     const firstRender = useRef(true);
     
     useEffect(() => {
         if (firstRender.current) {
+            // prevents API call on initial render
             firstRender.current = false;
             return;
         }
 
         if(params.name === '' || typeof params.name === 'undefined') return;
 
+        // cancel token in case a new call is made before previous one is fulfilled
         const cancelToken = axios.CancelToken.source();
 
         dispatch({ type: ACTIONS.MAKE_REQUEST });
@@ -58,7 +59,7 @@ export default function useFetchRepos(params, page) {
         return () => {
             cancelToken.cancel();
         }
-    }, [params, page]);
+    }, [params, page, orderBy, q]);
 
     return state;
 }

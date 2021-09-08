@@ -28,6 +28,10 @@
     cursor: default;
 }
 
+#react-paginate .break { 
+    pointer-events: none;
+}
+
 #react-paginate .active {
     display: inline-block;
     color: #1D76CA;
@@ -41,10 +45,6 @@
 .repo-item:hover {    
     cursor: pointer;
     background: #E8F0FE;
-}
-
-@media (hover: none) {
-
 }
 
 @media only screen and (max-width: 763px) {

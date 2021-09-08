@@ -5,10 +5,12 @@ import { useLocation } from 'react-router-dom';
 const SearchResult = () => {
     const [cloneBtnText, setCloneBtnText] = useState('Copy Clone URL')
     const location = useLocation();
+    // grabs information for repo from location state
     const {clone_url, created_at, description, forks, full_name, html_url, language, license, owner, watchers, stargazers_count } = location.state?.repo;
 
     const createdDate = new Date(created_at).toDateString();
 
+    // nice-to-have copy to clipboard for clone url
     const copyToClipboard = () => {
         navigator.clipboard.writeText(clone_url);
         setCloneBtnText('Copied!')
@@ -23,11 +25,11 @@ const SearchResult = () => {
                 <div className="d-flex justify-content-between">
                     <div className="mb-5 ml-1">
                         <Card.Title>About</Card.Title>
-                        <Card.Text>                            
+                        <Card.Text>
                             {description}
                         </Card.Text>
                     </div>
-                    <h6 className="detail-badges">                        
+                    <h6 className="detail-badges">
                         <div>
                             <i className="bi bi-eye-fill" /> {watchers}
                         </div>

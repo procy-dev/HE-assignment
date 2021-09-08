@@ -3,7 +3,7 @@ import { Badge, Card } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 
 const Repo = ({ repo }) => {
-    const { name, created_at, stargazers_count, owner, id, language } = repo;
+    const { name, stargazers_count, owner, id, language } = repo;
 
     return (
         <Link className="repo-link mb-2" to={{ pathname: `/details/${id}`, state: { repo: repo } }}>
@@ -15,12 +15,12 @@ const Repo = ({ repo }) => {
                                 {name} - <span className="text-muted font-weight-light">{owner.login}</span>
                             </Card.Title>
                             <Card.Subtitle className="mb-2">
-                                <Badge className="float-left" variant="secondary">{language}</Badge>                           
+                                <Badge className="float-left" variant="secondary">{language}</Badge>
                             </Card.Subtitle>
                         </div>
                         <Card.Text as="h6" className="result-stars">
-                            <div><i className="bi bi-star-fill"></i>&nbsp;{stargazers_count}</div>                            
-                        </Card.Text>                        
+                            <div><i className="bi bi-star-fill"></i>&nbsp;{stargazers_count}</div>
+                        </Card.Text>
                     </div>
                 </Card.Body>
             </Card>
