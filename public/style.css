@@ -1,0 +1,72 @@
+#react-paginate ul {
+    display: inline-block;
+    border: 1px solid rgba(0,0,0,.125);
+    background: white;
+    user-select: none;
+}
+
+#react-paginate li {
+    display: inline-block;
+    min-width: 60px;
+    min-height: 55px;
+    text-align: center;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+#react-paginate li > a {
+    padding: 1em;
+    line-height: 3.5;
+}
+
+#react-paginate li:hover { 
+    background: #E1E4E8;
+}
+
+#react-paginate .break:hover { 
+    background: white; 
+    cursor: default;
+}
+
+#react-paginate .active {
+    display: inline-block;
+    color: #1D76CA;
+    background: #E1E4E8;
+}
+
+.repo-link {
+    text-decoration: none !important;
+}
+
+.repo-item:hover {    
+    cursor: pointer;
+    background: #E8F0FE;
+}
+
+@media (hover: none) {
+
+}
+
+@media only screen and (max-width: 763px) {
+    #react-paginate li {
+        min-width: 40px;
+        min-height: 30px;
+        font-weight: 500;
+    }
+
+    #react-paginate li:hover { 
+        background: inherit;
+    }
+
+    .result-stars {
+        visibility: hidden;
+    }
+}
+
+@media only screen and (max-width: 470px) {
+    #react-paginate li {
+        min-width: 30px;
+        min-height: 25px;
+        font-weight: 500;
+    }
+}
