@@ -17,9 +17,6 @@ const SearchContainer = () => {
     // total number of pages of results
     const totalPages = Math.floor(repos.total_count / 10);
 
-    // toggles visibility of pagination
-    const visibility = repos.length <= 0 ? 'hidden' : 'visible';
-
     // debounce input change to prevent uncecessary api calls
     const debounce = (fn, wait) => {
         let timeout;
@@ -48,7 +45,7 @@ const SearchContainer = () => {
     const Display = () => {
         if(error) return <h1>{error.message}</h1>
         else if(loading) return <h1>Loading...</h1>
-        else if(repos.items.length === 0) return <h1>No Repositories Found</h1>
+        else if(repos.items?.length === 0) return <h1>No Repositories Found</h1>
         return (
             <h1>
                 {repos?.items?.map((repo) => {
@@ -62,7 +59,7 @@ const SearchContainer = () => {
         <Container className="my-4">
             <h1 className="mb-4">GitHub Repositories</h1>
             <SearchForm params={params} onParamChange={debounceOnChange} />
-            <div style={{visibility: visibility}} id="react-paginate">
+            <div style={{visibility: repos?.items?.length > 0 ? 'visible' : 'hidden'}} id="react-paginate">
                 <ReactPaginate
                     previousLabel={'<'}
                     nextLabel={'>'}
